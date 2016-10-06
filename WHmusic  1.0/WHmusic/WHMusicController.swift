@@ -12,39 +12,26 @@ import AVFoundation
 class WHMusicController: UIViewController {
     
     @IBOutlet weak var SongLabel: UILabel!
-
     @IBOutlet weak var SingerLabel: UILabel!
-    
     @IBOutlet weak var SliderView: UISlider!
-    
     @IBOutlet weak var MinTimeLabel: UILabel!
-    
     @IBOutlet weak var MaxTimeLabel: UILabel!
-    
     @IBOutlet weak var IconImageView: UIImageView!
-
     @IBOutlet weak var IconView: UIView!
-    
     @IBOutlet weak var LrcLabel: WHLrcLabel!
-    
     @IBOutlet weak var BackGroundView: UIImageView!
-    
     private var currentSong = AVAudioPlayer()
-    
     private var SliderProgressTimer:NSTimer?
-    
     private var lrcTimer:CADisplayLink?
-    
     @IBOutlet weak var PlayButton: UIButton!
-    
     @IBOutlet weak var LrcView: WHLrcView!
+    
+    var trackId:WHMusic?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         settingPlaySong()
         LrcView.lrcLabel = LrcLabel
-        MaxTimeLabel.font = UIFont.systemFontOfSize(13)
-        MinTimeLabel.font = UIFont.systemFontOfSize(13)
     }
 }
 
@@ -128,6 +115,7 @@ extension WHMusicController {
     }
     
     private func playMusicWithMusic(music: WHMusic) {
+        trackId = music
         let playerMusic = WHMusicTool.playerMusic()
         WHAudioTool.stopMusicWithMusicName(playerMusic.filename!)
         LrcLabel.text = ""
@@ -139,7 +127,10 @@ extension WHMusicController {
     
     private func settingPlaySong() {
         
-        let currentMusic = WHMusicTool.playerMusic()
+        let playerMusic = WHMusicTool.playerMusic()
+        WHAudioTool.stopMusicWithMusicName(playerMusic.filename!)
+        
+        let currentMusic = trackId!
         let currentAudio = WHAudioTool.playMusicWithMusicName(currentMusic.filename!)
         
         BackGroundView.image = UIImage(named: currentMusic.icon!)

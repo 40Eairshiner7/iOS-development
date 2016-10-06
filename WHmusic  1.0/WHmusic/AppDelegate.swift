@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //设置后台播放
+        application.statusBarStyle = .LightContent
         WHBackPlayTool.setupBackPlay()
         return true
     }
